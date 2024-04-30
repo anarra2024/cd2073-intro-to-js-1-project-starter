@@ -1,6 +1,4 @@
 /* Create an array named products which you will use to add all of your product object literals that you create in the next step. */
-const products = [];
-
 /* Create 3 or more product objects using object literal notation 
    Each product should include five properties
    - name: name of product (string)
@@ -15,39 +13,105 @@ const products = [];
    - orange.jpg by Mae Mu
    - strawberry.jpg by Allec Gomes
 */
+const products = [
+  {
+    name: 'Cherry',
+    price: 10,
+    quantity: 0,
+    productId: 1,
+    image: '../images/cherry.jpg'
+  },
+  {
+    name: 'Orange',
+    price: 15,
+    quantity: 0,
+    productId: 2,
+    image: '../images/orange.jpg'
+  },
+  {
+    name: 'Strawberry',
+    price: 5,
+    quantity: 0,
+    productId: 3,
+    image: '../images/strawberry.jpg'
+  }
+];
 
 /* Declare an empty array named cart to hold the items in the cart */
+const cart = [];
+
+function findProduct(productId){
+  let productFound = products.find(function(product){
+    return product.productId === productId;
+  });
+  return productFound;
+}
 
 /* Create a function named addProductToCart that takes in the product productId as an argument
   - addProductToCart should get the correct product based on the productId
   - addProductToCart should then increase the product's quantity
   - if the product is not already in the cart, add it to the cart
 */
+function addProductToCart(productId){
+  let productFound = findProduct(productId);
+  productFound.quantity = productFound.quantity + 1;
+  if(!cart.includes(productFound)){
+    cart.push(productFound);
+  }
+}
 
 /* Create a function named increaseQuantity that takes in the productId as an argument
   - increaseQuantity should get the correct product based on the productId
   - increaseQuantity should then increase the product's quantity
 */
+function increaseQuantity(productId){
+  let productFound = findProduct(productId);
+  productFound.quantity = productFound.quantity + 1;
+}
 
 /* Create a function named decreaseQuantity that takes in the productId as an argument
   - decreaseQuantity should get the correct product based on the productId
   - decreaseQuantity should decrease the quantity of the product
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
+function decreaseQuantity(productId){
+  let productFound = findProduct(productId);
+  productFound.quantity = productFound.quantity - 1;
+  if(productFound.quantity === 0){
+    removeProductFromCart(productId);
+  }
+}
 
 /* Create a function named removeProductFromCart that takes in the productId as an argument
   - removeProductFromCart should get the correct product based on the productId
   - removeProductFromCart should update the product quantity to 0
   - removeProductFromCart should remove the product from the cart
 */
+function removeProductFromCart(productId){
+  let findProductInCart = cart.findIndex((product) => product.productId === productId);
+  if(findProductInCart !== -1){
+    cart[findProductInCart].quantity = 0;
+    cart.splice(findProductInCart, 1);
+  }
+}
 
 /* Create a function named cartTotal that has no parameters
   - cartTotal should iterate through the cart to get the total cost of all products
   - cartTotal should return the total cost of the products in the cart
   Hint: price and quantity can be used to determine total cost
 */
+function cartTotal(){
+  let totalCost = 0;
+  for(let x = 0; x < cart.length; x++) {
+    totalCost = totalCost + cart[x].price * cart[x].quantity;
+  }
+  return totalCost;
+}
 
 /* Create a function called emptyCart that empties the products from the cart */
+function emptyCart(){
+  cart = [];
+}
 
 /* Create a function named pay that takes in an amount as an argument
   - amount is the money paid by customer
@@ -55,6 +119,11 @@ const products = [];
   - pay will return a positive number if money should be returned to customer
   Hint: cartTotal function gives us cost of all the products in the cart  
 */
+let paidAmount = 0;
+function pay(amount){
+  paidAmount = paidAmount + amount;
+  return paidAmount - cartTotal();
+}
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
 
