@@ -40,6 +40,7 @@ const products = [
 /* Declare an empty array named cart to hold the items in the cart */
 const cart = [];
 
+/*Helper function to find the right product based on  productId instead of repeating the code */
 function findProduct(productId){
   let productFound = products.find(function(product){
     return product.productId === productId;
